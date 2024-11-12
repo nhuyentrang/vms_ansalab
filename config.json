@@ -1,0 +1,70 @@
+{
+  "channel_defaults": {
+    "on_demand": true
+  },
+  "server": {
+    "debug": true,
+    "http_debug": false,
+    "http_demo": true,
+    "http_dir": "",
+    "http_login": "demo",
+    "http_password": "demo",
+    "http_port": ":8083",
+    "https": false,
+    "https_auto_tls": false,
+    "https_auto_tls_name": "",
+    "https_cert": "",
+    "https_key": "",
+    "https_port": "",
+    "ice_credential": "",
+    "ice_servers": [
+      "stun:stun.l.google.com:19302"
+    ],
+    "ice_username": "",
+    "log_level": "info",
+    "rtsp_port": ":5541",
+    "token": {
+      "backend": "",
+      "enable": false
+    },
+    "webrtc_port_max": 0,
+    "webrtc_port_min": 0
+  },
+  "streams": {
+    "0d549553-39de-4fd6-adc9-485f2a162ac2": {
+      "channels": {
+        "0": {
+          "on_demand": true,
+          "url": "rtsp://admin:123456aA@192.168.100.38:554"
+        }
+      },
+      "name": "cam11"
+    },
+    "9059b8c0-6b50-46a7-bc44-ea10808f5ad0": {
+      "channels": {
+        "0": {
+          "on_demand": true,
+          "url": "rtsp://admin:123456aA@192.168.100.38:554"
+        }
+      },
+      "name": "CAm2"
+    },
+    "demo1": {
+      "channels": {
+        "0": {
+          "audio": true,
+          "name": "Main",
+          "on_demand": true,
+          "url": "rtsp://admin:123456bB@192.168.100.33:554/Streaming/Channels/101"
+        },
+        "1": {
+          "audio": true,
+          "name": "Sub",
+          "on_demand": true,
+          "url": "rtsp://admin:123456bB@192.168.100.33:554/Streaming/Channels/102"
+        }
+      },
+      "name": "test video stream 1"
+    }
+  }
+}

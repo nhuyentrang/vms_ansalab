@@ -222,36 +222,3 @@ Video Codecs Supported: H264 all profiles
 
 Audio Codecs Supported: no
 
-## Performance
-
-```bash
-CPU usage ≈0.2%-1% one (thread) core cpu intel core i7 per stream
-```
-
-## Authors
-
-* **Andrey Semochkin** - *Initial work video* - [deepch](https://github.com/deepch)
-* **Dmitriy Vladykin** - *Initial work web UI* - [vdalex25](https://github.com/vdalex25)
-
-See also the list of [contributors](https://github.com/deepch/RTSPtoWeb/contributors) who participated in this project.
-
-## License
-
-This project licensed. License - see the [LICENSE.md](LICENSE.md) file for details
-
-[webrtc](https://github.com/pion/webrtc) follows license MIT [license](https://raw.githubusercontent.com/pion/webrtc/master/LICENSE).
-
-[joy4](https://github.com/nareix/joy4) follows license MIT [license](https://raw.githubusercontent.com/nareix/joy4/master/LICENSE).
-
-## Other Example
-
-Examples of working with video on golang
-
-- [RTSPtoWeb](https://github.com/deepch/RTSPtoWeb)
-- [RTSPtoWebRTC](https://github.com/deepch/RTSPtoWebRTC)
-- [RTSPtoWSMP4f](https://github.com/deepch/RTSPtoWSMP4f)
-- [RTSPtoImage](https://github.com/deepch/RTSPtoImage)
-- [RTSPtoHLS](https://github.com/deepch/RTSPtoHLS)
-- [RTSPtoHLSLL](https://github.com/deepch/RTSPtoHLSLL)
-
-[![paypal.me/AndreySemochkin](https://ionicabizau.github.io/badges/paypal.svg)](https://www.paypal.me/AndreySemochkin) - You can make one-time donations via PayPal. I'll probably buy a ~~coffee~~ tea. :tea:

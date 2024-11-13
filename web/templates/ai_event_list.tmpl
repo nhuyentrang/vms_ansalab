@@ -1,0 +1,89 @@
+{{template "head.tmpl" .}}
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Event List</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active">Event List</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</div>
+
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      {{ range $index, $event := .events }}
+      <div class="col-12 col-sm-6 col-md-3">
+        <div class="card">
+          <img src="{{ $event.thumbnail }}" class="card-img-top" alt="Event Image">
+          <div class="card-body">
+            <p class="card-text"><strong>{{ $event.timestamp }}</strong></p>
+            <p class="card-text">{{ $event.description }}</p>
+            <p class="card-text">{{ $event.location }}</p>
+            <button class="btn btn-primary" onclick="openEventDetail('{{ $event.id }}')">View Details</button>
+          </div>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Event Details -->
+<div class="modal fade" id="eventDetailModal" tabindex="-1" aria-labelledby="eventDetailLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eventDetailLabel">Event Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4">
+            <img id="eventImage" src="" class="img-fluid" alt="Event Image">
+            <p><strong>Result</strong>: <span id="eventResult"></span></p>
+            <p><strong>Object</strong>: <span id="eventObject"></span></p>
+            <p><strong>Date</strong>: <span id="eventDate"></span></p>
+            <p><strong>Camera</strong>: <span id="eventCamera"></span></p>
+            <p><strong>Location</strong>: <span id="eventLocation"></span></p>
+          </div>
+          <div class="col-md-8">
+            <img id="eventFullImage" src="" class="img-fluid" alt="Full Image">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Full Screen</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openEventDetail(eventId) {
+    // Fetch event details with AJAX or load data from a predefined object
+    // For example:
+    let event = getEventDetails(eventId); // Implement this function to fetch details based on eventId
+
+    document.getElementById("eventImage").src = event.thumbnail;
+    document.getElementById("eventResult").innerText = event.result;
+    document.getElementById("eventObject").innerText = event.object;
+    document.getElementById("eventDate").innerText = event.date;
+    document.getElementById("eventCamera").innerText = event.camera;
+    document.getElementById("eventLocation").innerText = event.location;
+    document.getElementById("eventFullImage").src = event.fullImage;
+
+    $('#eventDetailModal').modal('show');
+  }
+</script>
+
+{{template "foot.tmpl" .}}

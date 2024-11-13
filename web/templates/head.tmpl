@@ -84,6 +84,22 @@
                 <p>Full multiview</p>
               </a>
             </li>
+            <li class="nav-item ">
+              <a href="/pages/playback" class="nav-link {{ if  (eq .page "playback") }}
+                active
+              {{end}}">
+                <i class="fas fa-list-alt nav-icon"></i>
+                <p>Playback</p>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a href="/pages/aiEvent" class="nav-link {{ if  (eq .page "ai_event_list") }}
+                active
+              {{end}}">
+                <i class="fas fa-list-alt nav-icon"></i>
+                <p>AI event</p>
+              </a>
+            </li>
             <li class="nav-header">MISCELLANEOUS</li>
             <li class="nav-item">
               <a href="/pages/documentation" class="nav-link

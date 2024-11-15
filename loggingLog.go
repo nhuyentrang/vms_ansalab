@@ -6,8 +6,6 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var log = logrus.New()
-
 func init() {
 	//TODO: next add write to file
 	if !debug {

@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     }
 
-    const webrtcSendChannel = webrtc.createDataChannel('rtsptowebSendChannel')
+    const webrtcSendChannel = webrtc.createDataChannel('vms_ansaSendChannel')
     webrtcSendChannel.onopen = (event) => {
       console.log(`${webrtcSendChannel.label} has opened`)
       webrtcSendChannel.send('ping')

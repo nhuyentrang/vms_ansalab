@@ -1,4 +1,4 @@
-APP=RTSPtoWeb
+APP=vms_ansa
 SERVER_FLAGS ?= -config config.json
 
 P="\\033[34m[+]\\033[0m"

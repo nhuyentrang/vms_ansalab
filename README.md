@@ -1,8 +1,6 @@
-# RTSPtoWeb share you ip camera to world!
+# Video Management System !
 
-RTSPtoWeb converts your RTSP streams to formats consumable in a web browser
-like MSE (Media Source Extensions), WebRTC, or HLS. It's fully native Golang
-without the use of FFmpeg or GStreamer!
+
 
 ## Table of Contents
 
@@ -21,11 +19,11 @@ without the use of FFmpeg or GStreamer!
 
 1. Download source
    ```bash
-   $ git clone https://github.com/deepch/RTSPtoWeb
+   $ git clone https://github.com/xwomen1/vms_ansalab.git
    ```
 1. CD to Directory
    ```bash
-    $ cd RTSPtoWeb/
+    $ cd VMS/
    ```
 1. Test Run
    ```bash
@@ -40,7 +38,8 @@ without the use of FFmpeg or GStreamer!
 
 1. Run docker container
     ```bash
-    $ docker run --name rtsp-to-web --network host ghcr.io/deepch/rtsptoweb:latest 
+    $ docker run --name rtsp-to-web --network host ghcr.io/deepch/w
+    vms:latest 
     ```
 1. Open Browser
     ```bash
@@ -53,7 +52,7 @@ You may override the <a href="#example-configjson">configuration</a> `/PATH_TO_C
 $ docker run --name rtsp-to-web \
     -v /PATH_TO_CONFIG/config.json:/config/config.json \
     --network host \
-    ghcr.io/deepch/rtsptoweb:latest 
+    ghcr.io/deepch/vms:latest 
 ```
 
 ## Configuration
@@ -199,13 +198,13 @@ file.php need response json
 ### Use help to show available args
 
 ```bash
-./RTSPtoWeb --help
+./VMS --help
 ```
 
 #### Response
 
 ```bash
-Usage of ./RTSPtoWeb:
+Usage of ./VMS:
   -config string
         config patch (/etc/server/config.json or config.json) (default "config.json")
   -debug

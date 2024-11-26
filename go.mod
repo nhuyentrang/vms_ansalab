@@ -1,4 +1,4 @@
-module github.com/deepch/RTSPtoWeb
+module github.com/deepch/vms_ansa
 
 go 1.19
 

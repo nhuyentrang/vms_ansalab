@@ -43,7 +43,7 @@ func HTTPAPIServer() {
 	/*
 		Static HTML Files Demo Mode
 	*/
-	go ListenAndProcessRabbitMQ()
+	// go ListenAndProcessRabbitMQ()
 	if Storage.ServerHTTPDemo() {
 		public.LoadHTMLGlob(Storage.ServerHTTPDir() + "/templates/*")
 		public.GET("/", HTTPAPIServerIndex)

@@ -1,6 +1,4 @@
-module github.com/deepch/VMS
-
-go 1.22
+module github.com/deepch/RTSPtoWeb
 
 toolchain go1.22.2
 

@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 # VMS share you ip camera to world!
 
 VMS converts your RTSP streams to formats consumable in a web browser
 like MSE (Media Source Extensions), WebRTC, or HLS. It's fully native Golang
 without the use of FFmpeg or GStreamer!
+=======
+# Video Management System !
+
+
+>>>>>>> 46fe76fc045fd6f335d158ce41c3aa160861d621
 
 ## Table of Contents
 
@@ -21,7 +27,11 @@ without the use of FFmpeg or GStreamer!
 
 1. Download source
    ```bash
+<<<<<<< HEAD
    $ git clone https://github.com/deepch/VMS
+=======
+   $ git clone https://github.com/xwomen1/vms_ansalab.git
+>>>>>>> 46fe76fc045fd6f335d158ce41c3aa160861d621
    ```
 1. CD to Directory
    ```bash
@@ -40,7 +50,8 @@ without the use of FFmpeg or GStreamer!
 
 1. Run docker container
     ```bash
-    $ docker run --name rtsp-to-web --network host ghcr.io/deepch/rtsptoweb:latest 
+    $ docker run --name rtsp-to-web --network host ghcr.io/deepch/w
+    vms:latest 
     ```
 1. Open Browser
     ```bash
@@ -53,7 +64,7 @@ You may override the <a href="#example-configjson">configuration</a> `/PATH_TO_C
 $ docker run --name rtsp-to-web \
     -v /PATH_TO_CONFIG/config.json:/config/config.json \
     --network host \
-    ghcr.io/deepch/rtsptoweb:latest 
+    ghcr.io/deepch/vms:latest 
 ```
 
 ## Configuration

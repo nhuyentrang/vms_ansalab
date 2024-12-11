@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 APP=VMS
+=======
+APP=vms_ansa
+>>>>>>> 46fe76fc045fd6f335d158ce41c3aa160861d621
 SERVER_FLAGS ?= -config config.json
 
 P="\\033[34m[+]\\033[0m"

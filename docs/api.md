@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # VMS API
+=======
+# vms_ansa API
+>>>>>>> 46fe76fc045fd6f335d158ce41c3aa160861d621
 
   * [Streams](#streams)
     * [List streams](#list-streams)

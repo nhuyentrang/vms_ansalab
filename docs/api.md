@@ -1,4 +1,4 @@
-# RTSPtoWeb API
+# VMS API
 
   * [Streams](#streams)
     * [List streams](#list-streams)

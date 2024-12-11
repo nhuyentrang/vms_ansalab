@@ -1,6 +1,6 @@
-# RTSPtoWeb share you ip camera to world!
+# VMS share you ip camera to world!
 
-RTSPtoWeb converts your RTSP streams to formats consumable in a web browser
+VMS converts your RTSP streams to formats consumable in a web browser
 like MSE (Media Source Extensions), WebRTC, or HLS. It's fully native Golang
 without the use of FFmpeg or GStreamer!
 
@@ -21,11 +21,11 @@ without the use of FFmpeg or GStreamer!
 
 1. Download source
    ```bash
-   $ git clone https://github.com/deepch/RTSPtoWeb
+   $ git clone https://github.com/deepch/VMS
    ```
 1. CD to Directory
    ```bash
-    $ cd RTSPtoWeb/
+    $ cd VMS/
    ```
 1. Test Run
    ```bash
@@ -199,13 +199,13 @@ file.php need response json
 ### Use help to show available args
 
 ```bash
-./RTSPtoWeb --help
+./VMS --help
 ```
 
 #### Response
 
 ```bash
-Usage of ./RTSPtoWeb:
+Usage of ./VMS:
   -config string
         config patch (/etc/server/config.json or config.json) (default "config.json")
   -debug

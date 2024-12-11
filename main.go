@@ -6,13 +6,54 @@ import (
 	"syscall"
 	"time"
 
+	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
-	"github.com/streadway/amqp"
 )
 
 var log = logrus.New()
 
 func main() {
+	// db, err := Connect(
+	// 	"localhost", // sqlHost
+	// 	"5432",      // sqlPort
+	// 	"vms",       // sqlDbName
+	// 	"disable",   // sqlSslmode
+	// 	"ansa",      // sqlUser
+	// 	"ansa",      // sqlPassword
+	// 	"public",    // currentSchema
+	// )
+	// if err != nil {
+	// 	log.Fatalf("Error connecting to database: %v", err)
+	// }
+	// defer db.Close()
+
+	// // Kiểm tra kết nối và thực hiện một truy vấn đơn giản
+	// err = db.Ping()
+	// if err != nil {
+	// 	log.Fatalf("Failed to ping the database: %v", err)
+	// } else {
+	// 	fmt.Println("Successfully connected to PostgreSQL!")
+	// }
+
+	// if !Connected {
+	// 	log.Infof("SQL DB not configured, skipping")
+	// } else {
+	// 	err = Ping()
+	// 	if err != nil {
+	// 		log.Errorf(err.Error())
+	// 	} else {
+	// 		log.Info("Successfully connected to database")
+	// 		// Migrate tables
+	// 		err = Migrate(
+	// 			&Event{},
+	// 		)
+	// 		if err != nil {
+	// 			panic("Failed to AutoMigrate table! err: " + err.Error())
+	// 		}
+	// 	}
+	// }
+	// defer Close()
+
 	log.WithFields(logrus.Fields{
 		"module": "main",
 		"func":   "main",
@@ -21,9 +62,6 @@ func main() {
 	go HTTPAPIServer()
 	go RTSPServer()
 	go Storage.StreamChannelRunAll()
-
-	// Thêm chức năng đọc từ RabbitMQ
-	go RabbitMQConsumer()
 
 	signalChanel := make(chan os.Signal, 1)
 	done := make(chan bool, 1)
@@ -49,80 +87,4 @@ func main() {
 		"module": "main",
 		"func":   "main",
 	}).Info("Server stop working by signal")
-}
-
-// RabbitMQConsumer handles consuming messages from RabbitMQ
-func RabbitMQConsumer() {
-	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
-	if err != nil {
-		log.WithFields(logrus.Fields{
-			"module": "rabbitmq",
-			"func":   "RabbitMQConsumer",
-		}).Fatalf("Failed to connect to RabbitMQ: %v", err)
-	}
-	defer conn.Close()
-
-	ch, err := conn.Channel()
-	if err != nil {
-		log.WithFields(logrus.Fields{
-			"module": "rabbitmq",
-			"func":   "RabbitMQConsumer",
-		}).Fatalf("Failed to open a channel: %v", err)
-	}
-	defer ch.Close()
-
-	queueName := "vms_queue"
-	queue, err := ch.QueueDeclare(
-		queueName, // Tên Queue
-		true,      // Durable
-		false,     // Delete when unused
-		false,     // Exclusive
-		false,     // No-wait
-		nil,       // Arguments
-	)
-	if err != nil {
-		log.WithFields(logrus.Fields{
-			"module": "rabbitmq",
-			"func":   "RabbitMQConsumer",
-		}).Fatalf("Failed to declare a queue: %v", err)
-	}
-
-	msgs, err := ch.Consume(
-		queue.Name, // Queue name
-		"",         // Consumer name
-		true,       // Auto-ack
-		false,      // Exclusive
-		false,      // No-local
-		false,      // No-wait
-		nil,        // Arguments
-	)
-	if err != nil {
-		log.WithFields(logrus.Fields{
-			"module": "rabbitmq",
-			"func":   "RabbitMQConsumer",
-		}).Fatalf("Failed to register a consumer: %v", err)
-	}
-
-	log.WithFields(logrus.Fields{
-		"module": "rabbitmq",
-		"func":   "RabbitMQConsumer",
-	}).Info("RabbitMQ consumer started and waiting for messages")
-
-	for msg := range msgs {
-		log.WithFields(logrus.Fields{
-			"module": "rabbitmq",
-			"func":   "RabbitMQConsumer",
-		}).Infof("Received message: %s", msg.Body)
-
-		// Xử lý message ở đây
-		processMessage(msg.Body)
-	}
-}
-
-func processMessage(body []byte) {
-	log.WithFields(logrus.Fields{
-		"module": "rabbitmq",
-		"func":   "processMessage",
-	}).Infof("Processing message: %s", body)
-
 }

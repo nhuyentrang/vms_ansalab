@@ -43,7 +43,7 @@ func HTTPAPIServer() {
 	/*
 		Static HTML Files Demo Mode
 	*/
-
+	go ListenAndProcessRabbitMQ()
 	if Storage.ServerHTTPDemo() {
 		public.LoadHTMLGlob(Storage.ServerHTTPDir() + "/templates/*")
 		public.GET("/", HTTPAPIServerIndex)
@@ -57,7 +57,9 @@ func HTTPAPIServer() {
 		public.Any("/pages/multiview/full", HTTPAPIFullScreenMultiView)
 		public.GET("/pages/documentation", HTTPAPIServerDocumentation)
 		public.GET("/pages/player/all/:uuid/:channel", HTTPAPIPlayAll)
-		public.GET("/pages/aiEvent", aiEventHandler)
+		public.GET("/pages/aiEvent", SearchAIEvent)
+
+		public.GET("/aiEvent/:id", ReadCabinEventAI)
 		public.GET("/pages/playback/:id", playbackHandler)
 		public.StaticFS("/static", http.Dir(Storage.ServerHTTPDir()+"/static"))
 	}
@@ -301,91 +303,4 @@ func CrossOrigin() gin.HandlerFunc {
 		}
 		c.Next()
 	}
-}
-
-func aiEventHandler(c *gin.Context) {
-	events := []Event{
-		{
-			ID:          "1",
-			Thumbnail:   "/static/img/event1.jpg",
-			Timestamp:   "2024-11-12 15:10:38",
-			Description: "Car detected",
-			Location:    "PHUCHAN_TEST2",
-			Result:      "PID 7282 | 7420837",
-			Object:      "Phát hiện người đi xe",
-			Date:        "2024-11-12 15:10:30",
-			Camera:      "PHUCHAN_TEST3",
-			FullImage:   "/static/img/event1_full.jpg",
-		},
-		{
-			ID:          "2",
-			Thumbnail:   "/static/img/event2.jpg",
-			Timestamp:   "2024-11-12 15:10:37",
-			Description: "Motorbike detected",
-			Location:    "PHUCHAN_TEST3",
-			Result:      "PID 7281 | 7420472",
-			Object:      "Phát hiện người đi xe máy",
-			Date:        "2024-11-12 15:10:14",
-			Camera:      "PHUCHAN_TEST3",
-			FullImage:   "/static/img/event2_full.jpg",
-		},
-	}
-
-	c.HTML(http.StatusOK, "ai_event_list.tmpl", gin.H{
-		"events": events,
-	})
-}
-
-type Event struct {
-	ID          string
-	Thumbnail   string
-	Timestamp   string
-	Description string
-	Location    string
-	Result      string
-	Object      string
-	Date        string
-	Camera      string
-	FullImage   string
-}
-
-func playbackHandler(c *gin.Context) {
-	eventID := c.Param("id")
-
-	events := map[string]Event{
-		"1": {
-			ID:          "1",
-			Thumbnail:   "/static/img/event1.jpg",
-			Timestamp:   "2024-11-12 15:10:38",
-			Description: "Car detected",
-			Location:    "PHUCHAN_TEST2",
-			Result:      "PID 7282 | 7420837",
-			Object:      "Phát hiện người đi xe",
-			Date:        "2024-11-12 15:10:30",
-			Camera:      "PHUCHAN_TEST3",
-			FullImage:   "/static/img/event1_full.jpg",
-		},
-		"2": {
-			ID:          "2",
-			Thumbnail:   "/static/img/event2.jpg",
-			Timestamp:   "2024-11-12 15:10:37",
-			Description: "Motorbike detected",
-			Location:    "PHUCHAN_TEST3",
-			Result:      "PID 7281 | 7420472",
-			Object:      "Phát hiện người đi xe máy",
-			Date:        "2024-11-12 15:10:14",
-			Camera:      "PHUCHAN_TEST3",
-			FullImage:   "/static/img/event2_full.jpg",
-		},
-	}
-
-	event, exists := events[eventID]
-	if !exists {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Event not found"})
-		return
-	}
-
-	c.HTML(http.StatusOK, "playback.tmpl", gin.H{
-		"event": event,
-	})
 }

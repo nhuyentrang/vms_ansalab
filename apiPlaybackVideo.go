@@ -15,7 +15,7 @@ func playbackHandler(c *gin.Context) {
 
 			Timestamp:   202411,
 			Description: "Car detected",
-			Location:    "PHUCHAN_TEST2",
+			Location:    "Camera_TEST2",
 			Result:      "PID 7282 | 7420837",
 		},
 		"2": {
@@ -23,7 +23,7 @@ func playbackHandler(c *gin.Context) {
 			Image:       "/static/img/event2.jpg",
 			Timestamp:   7122024,
 			Description: "Motorbike detected",
-			Location:    "PHUCHAN_TEST3",
+			Location:    "Camera_TEST1",
 			Result:      "PID 7281 | 7420472",
 		},
 	}

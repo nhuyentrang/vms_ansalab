@@ -39,7 +39,7 @@ type DTO_Event struct {
 // Global slice để lưu trữ các sự kiện từ RabbitMQ
 var eventList []Event
 
-var amqpURI = "amqp://guest:guest@localhost:5672/" // Địa chỉ RabbitMQ, thay đổi theo cấu hình của bạn
+var amqpURI = "amqp://guest:guest@localhost:15672/" // Địa chỉ RabbitMQ, thay đổi theo cấu hình của bạn
 
 func ConnectRabbitMQ() (*amqp.Connection, *amqp.Channel, error) {
 	conn, err := amqp.Dial(amqpURI)

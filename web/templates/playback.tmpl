@@ -24,7 +24,9 @@
           <div class="box">
             <label for="Camera">Choose Camera:</label>
             <select id="dropdown" name="camera">
-              <!-- Options will be populated by JavaScript -->
+              {{range .streams}}
+                <option value="{{.ID}}">{{.Name}}</option>
+              {{end}}
             </select>
           </div>
         </div>

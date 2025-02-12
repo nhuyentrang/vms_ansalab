@@ -39,6 +39,33 @@
         }
       },
       "name": "camnet"
+    },
+    "670becde-df21-4b90-aa04-657320c4cc5d": {
+      "channels": {
+        "0": {
+          "on_demand": true,
+          "url": "trangdohoi"
+        }
+      },
+      "name": "tranghello"
+    },
+    "e2eb66f2-041c-416b-8879-eefef7854711": {
+      "channels": {
+        "0": {
+          "on_demand": true,
+          "url": "trangdohoi"
+        }
+      },
+      "name": "trangne"
+    },
+    "faac20b7-aca8-4f78-87a7-69461a1b545d": {
+      "channels": {
+        "0": {
+          "on_demand": true,
+          "url": "trangdohoi"
+        }
+      },
+      "name": "tranghi"
     }
   }
 }

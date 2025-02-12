@@ -63,7 +63,7 @@ func HTTPAPIServer() {
 		public.GET("/pages/aiEvent", SearchAIEvent)
 
 		public.GET("/aiEvent/:id", ReadCabinEventAI)
-		public.GET("/pages/playback", HTTPAPIPlaybackAll) // Playback page
+		public.GET("/pages/playback", HTTPAPIPlayback) // Playback page
 		//public.GET("/pages/playback/:id", playbackHandler) // Playback for specific camera
 		public.StaticFS("/static", http.Dir(Storage.ServerHTTPDir()+"/static"))
 	}
@@ -288,9 +288,9 @@ func HTTPAPIPlayback(c *gin.Context) {
 	streams := make([]struct {
 		ID   string `json:"id"`
 		Name string `json:"name"`
-	}, 0, len(config.Streams))
+	}, 0, len(Storage.Streams))
 
-	for id, stream := range config.Streams {
+	for id, stream := range Storage.Streams {
 		streams = append(streams, struct {
 			ID   string `json:"id"`
 			Name string `json:"name"`
@@ -299,6 +299,11 @@ func HTTPAPIPlayback(c *gin.Context) {
 			Name: stream.Name,
 		})
 	}
+	starttime := c.Query("starttime")
+	endtime := c.Query("endtime")
+
+	fmt.Println("Start Time:", starttime)
+	fmt.Println("End Time:", endtime)
 
 	c.HTML(http.StatusOK, "playback.tmpl", gin.H{
 		"port":      Storage.ServerHTTPPort(),

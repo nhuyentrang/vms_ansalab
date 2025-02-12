@@ -18,7 +18,7 @@
 
 <div class="content">
   <div class="container-fluid">
-    <form method="GET" action="/playback">
+    <form method="GET" action="/pages/playback">
       <div class="row">
         <div class="col-md-4">
           <div class="box">
@@ -27,6 +27,15 @@
               {{range .streams}}
                 <option value="{{.ID}}">{{.Name}}</option>
               {{end}}
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="box">
+            <label for="channel">Choose Channel:</label>
+            <select id="channel" name="channel">
+              <option value="main">Main</option>
+              <option value="sub">Sub</option>
             </select>
           </div>
         </div>

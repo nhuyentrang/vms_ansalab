@@ -285,25 +285,41 @@ func init() {
 	}
 }
 func HTTPAPIPlayback(c *gin.Context) {
+	starttime := c.Query("starttime")
+	endtime := c.Query("endtime")
+	camera := c.Query("camera")
+	channel := c.Query("channel")
 	streams := make([]struct {
 		ID   string `json:"id"`
 		Name string `json:"name"`
+		RTSP string `json:"rtsp"`
 	}, 0, len(Storage.Streams))
 
 	for id, stream := range Storage.Streams {
+		rtspURL := ""
+		if channel == "main" {
+			rtspURL = stream.Channels["0"].URL
+		} else {
+			rtspURL = stream.Channels["1"].URL
+		}
+		// Construct the RTSP URL with playback parameters
+		rtspURL = fmt.Sprintf("%s?starttime=%s&endtime=%s", rtspURL, starttime, endtime)
+		fmt.Println("RTSPRTSP:", rtspURL)
 		streams = append(streams, struct {
 			ID   string `json:"id"`
 			Name string `json:"name"`
+			RTSP string `json:"rtsp"`
 		}{
 			ID:   id,
 			Name: stream.Name,
+			RTSP: rtspURL,
 		})
 	}
-	starttime := c.Query("starttime")
-	endtime := c.Query("endtime")
 
 	fmt.Println("Start Time:", starttime)
 	fmt.Println("End Time:", endtime)
+	fmt.Println("Camera:", camera)
+	fmt.Println("Channel:", channel)
 
 	c.HTML(http.StatusOK, "playback.tmpl", gin.H{
 		"port":      Storage.ServerHTTPPort(),
@@ -312,8 +328,8 @@ func HTTPAPIPlayback(c *gin.Context) {
 		"page":      "playback",
 		"uuid":      c.Param("uuid"),
 		"channel":   c.Param("channel"),
-		"startTime": c.Param("startTime"),
-		"endTime":   c.Param("endTime"),
+		"startTime": starttime,
+		"endTime":   endtime,
 	})
 }
 

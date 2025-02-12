@@ -1,16 +1,21 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug",
+            "name": "Debug VMS_ANSALAB",
             "type": "go",
-            "request": "l",
-            "mode": "local",
-            "processId": 0
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}",
+            "env": {
+                "GO_ENV": "development",
+                "LOG_LEVEL": "debug"
+            },
+            
+            "showLog": true,
+            "trace": "verbose",
+            "cwd": "${workspaceFolder}",
+            "output": "debug.log"
         }
-
     ]
 }

@@ -22,6 +22,8 @@ type Event struct {
 	CameraID      string `json:"cameraId"`
 	Result        string `json:"result"`
 	Location      string `json:"location"`
+	Camera        string `json:"cam_name"`
+	FullImage     string `json:"fullImage"`
 }
 
 type DTO_Event struct {

@@ -1,6 +1,9 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"time"
@@ -43,7 +46,7 @@ func HTTPAPIServer() {
 	/*
 		Static HTML Files Demo Mode
 	*/
-	go ListenAndProcessRabbitMQ()
+	// go ListenAndProcessRabbitMQ()
 	if Storage.ServerHTTPDemo() {
 		public.LoadHTMLGlob(Storage.ServerHTTPDir() + "/templates/*")
 		public.GET("/", HTTPAPIServerIndex)
@@ -60,7 +63,8 @@ func HTTPAPIServer() {
 		public.GET("/pages/aiEvent", SearchAIEvent)
 
 		public.GET("/aiEvent/:id", ReadCabinEventAI)
-		public.GET("/pages/playback/:id", playbackHandler)
+		public.GET("/pages/playback", HTTPAPIPlaybackAll) // Playback page
+		//public.GET("/pages/playback/:id", playbackHandler) // Playback for specific camera
 		public.StaticFS("/static", http.Dir(Storage.ServerHTTPDir()+"/static"))
 	}
 
@@ -252,6 +256,59 @@ func HTTPAPIPlayAll(c *gin.Context) {
 		"page":    "play_all",
 		"uuid":    c.Param("uuid"),
 		"channel": c.Param("channel"),
+	})
+}
+
+type Stream struct {
+	Name     string `json:"name"`
+	Channels map[string]struct {
+		OnDemand bool   `json:"on_demand"`
+		URL      string `json:"url"`
+	} `json:"channels"`
+}
+
+type Config struct {
+	Streams map[string]Stream `json:"streams"`
+}
+
+var config Config
+
+func init() {
+	data, err := ioutil.ReadFile("config.json")
+	if err != nil {
+		panic(fmt.Sprintf("Failed to read config file: %v", err))
+	}
+
+	err = json.Unmarshal(data, &config)
+	if err != nil {
+		panic(fmt.Sprintf("Failed to parse config file: %v", err))
+	}
+}
+func HTTPAPIPlayback(c *gin.Context) {
+	streams := make([]struct {
+		ID   string `json:"id"`
+		Name string `json:"name"`
+	}, 0, len(config.Streams))
+
+	for id, stream := range config.Streams {
+		streams = append(streams, struct {
+			ID   string `json:"id"`
+			Name string `json:"name"`
+		}{
+			ID:   id,
+			Name: stream.Name,
+		})
+	}
+
+	c.HTML(http.StatusOK, "playback.tmpl", gin.H{
+		"port":      Storage.ServerHTTPPort(),
+		"streams":   streams,
+		"version":   time.Now().String(),
+		"page":      "playback",
+		"uuid":      c.Param("uuid"),
+		"channel":   c.Param("channel"),
+		"startTime": c.Param("startTime"),
+		"endTime":   c.Param("endTime"),
 	})
 }
 

@@ -8,7 +8,7 @@
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="/">Home</a></li>
-          <li class="breadcrumb-item"><a href="/pages/aiEvent">Event List</a></li>
+          <li class="breadcrumb-item"><a href="/pages/Playback">Event List</a></li>
           <li class="breadcrumb-item active">Playback</li>
         </ol>
       </div>
@@ -18,20 +18,63 @@
 
 <div class="content">
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-4">
-        <img src="{{ .event.Thumbnail }}" class="img-fluid" alt="Event Thumbnail">
-        <p><strong>Result</strong>: {{ .event.Result }}</p>
-        <p><strong>Object</strong>: {{ .event.Object }}</p>
-        <p><strong>Date</strong>: {{ .event.Date }}</p>
-        <p><strong>Camera</strong>: {{ .event.Camera }}</p>
-        <p><strong>Location</strong>: {{ .event.Location }}</p>
+    <form method="GET" action="/playback">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="box">
+            <label for="Camera">Choose Camera:</label>
+            <select id="dropdown" name="camera">
+              <!-- Options will be populated by JavaScript -->
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="box">
+            <label for="starttime">Choose Start Time:</label>
+            <input type="datetime-local" id="starttime" name="starttime" step="1">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="box">
+            <label for="endtime">Choose End Time:</label>
+            <input type="datetime-local" id="endtime" name="endtime" step="1">
+          </div>
+        </div>
       </div>
-      <div class="col-md-8">
-        <img src="{{ .event.FullImage }}" class="img-fluid" alt="Full Image">
+      <div class="row mt-4">
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </form>
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="box">
+          <video id="playbackVideo" width="100%" controls>
+            <source src="/path/to/your/video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 {{template "foot.tmpl" .}}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    fetch('/pages/stream/list')
+      .then(response => response.json())
+      .then(data => {
+        const dropdown = document.getElementById('dropdown');
+        data.streams.forEach(stream => {
+          const option = document.createElement('option');
+          option.value = stream.id;
+          option.textContent = stream.name;
+          dropdown.appendChild(option);
+        });
+      })
+      .catch(error => console.error('Error fetching streams:', error));
+  });
+</script>

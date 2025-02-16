@@ -297,23 +297,28 @@ func HTTPAPIPlayback(c *gin.Context) {
 
 	for id, stream := range Storage.Streams {
 		rtspURL := ""
-		if channel == "main" {
-			rtspURL = stream.Channels["0"].URL
-		} else {
-			rtspURL = stream.Channels["1"].URL
+		if stream.Name == camera {
+			if channel == "main" {
+				rtspURL = stream.Channels["0"].URL
+			} else {
+				rtspURL = stream.Channels["1"].URL
+			}
+			// Construct the RTSP URL with playback parameters
+			rtspURL = fmt.Sprintf("%s?starttime=%s&endtime=%s", rtspURL, formatTime(starttime), formatTime(endtime))
+			//rtspURL = fmt.Sprintf("%s?starttime=%s&endtime=%s", rtspURL, starttime, endtime)
+			fmt.Println("RTSPRTSP:", rtspURL)
+			streams = append(streams, struct {
+				ID   string `json:"id"`
+				Name string `json:"name"`
+				RTSP string `json:"rtsp"`
+			}{
+				ID:   id,
+				Name: stream.Name,
+				RTSP: rtspURL,
+			})
+			fmt.Println("ID:", id)
 		}
-		// Construct the RTSP URL with playback parameters
-		rtspURL = fmt.Sprintf("%s?starttime=%s&endtime=%s", rtspURL, starttime, endtime)
-		fmt.Println("RTSPRTSP:", rtspURL)
-		streams = append(streams, struct {
-			ID   string `json:"id"`
-			Name string `json:"name"`
-			RTSP string `json:"rtsp"`
-		}{
-			ID:   id,
-			Name: stream.Name,
-			RTSP: rtspURL,
-		})
+
 	}
 
 	fmt.Println("Start Time:", starttime)
@@ -331,6 +336,15 @@ func HTTPAPIPlayback(c *gin.Context) {
 		"startTime": starttime,
 		"endTime":   endtime,
 	})
+}
+
+func formatTime(t string) string {
+	parsedTime, err := time.Parse("2006-01-02T15:04:05", t)
+	if err != nil {
+		fmt.Println("Error parsing time:", err)
+		return t
+	}
+	return parsedTime.Format("20060102T150405Z")
 }
 
 type MultiViewOptions struct {

@@ -49,6 +49,15 @@
       },
       "name": "tranghello"
     },
+    "d900cc6c-aaec-4822-80ed-5e2e3417a6be": {
+      "channels": {
+        "0": {
+          "on_demand": true,
+          "url": "trang1"
+        }
+      },
+      "name": "hellotrang"
+    },
     "e2eb66f2-041c-416b-8879-eefef7854711": {
       "channels": {
         "0": {

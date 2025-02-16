@@ -75,6 +75,15 @@
         }
       },
       "name": "tranghi"
+    },
+    "557b654d-819a-4815-86a5-4dc6b0d330f0": {
+      "channels": {
+        "0": {
+          "on_demand": true,
+          "url": "rtsp://admin:sanslab1@192.168.1.64:554/Streaming/Channels/101"
+        }
+      },
+      "name": "ansa"
     }
   }
 }
